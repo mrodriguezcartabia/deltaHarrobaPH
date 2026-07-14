@@ -71,7 +71,7 @@ def teoria():
         * 35.3147 $ft^3$ = $m^3$
         * $in. Hg$ = 25.4 $mm Hg$
         * $in. H_2O$ = 25.4 $mm H_2O$
-        * $^\circ F = \frac{9}{5} ^\circ C +32$
+        * $^\circ F =  ^\circ C \, 9/5+32$
         """)
 
     st.markdown("---")
