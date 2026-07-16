@@ -4,6 +4,12 @@ from calculos import realizar_calculos, cargar_datos_muestra
 from pdf_reporte import generar_pdf
 from textos import teoria
 from herramientas import marcar_dato_manual, toggle_units, confirmar_carga_muestra
+# Soluciona los problemas de caché con los archivos auxiliares
+import importlib
+import textos
+import pdf_reporte
+importlib.reload(textos)
+importlib.reload(pdf_reporte)
 
 st.set_page_config(page_title="Calibración EPA Método 5 Patrón húmedo", layout="wide")
 
@@ -25,15 +31,14 @@ col_titulo, col_advertencia, col_unidades, col_muestra, col_teoria = st.columns(
 
 with col_titulo:
     st.title("Calibración de consola")
-    st.write("Método 5 utilizando patrón húmedo")
 
 with col_advertencia:
     # Advertencia si está en sistema imperial y definiciones
     if st.session_state.unit_system == 'imperial':
         st.error("ADVERTENCIA: está configurado el Sistema Imperial de unidades.")
-        u_vol, u_temp, u_pres, u_h2o = "ft³", "°F", "in. Hg", "in. H₂O"
+        u_vol, u_temp, u_pres, u_h2o, cau, Q_ref, t_ref, p_ref = "ft³", "°F", "in. Hg", "in. H₂O", "dcfm", "0.75", "68", "29.92"
     else:
-        u_vol, u_temp, u_pres, u_h2o = "m³", "°C", "mm Hg", "mm H₂O"
+        u_vol, u_temp, u_pres, u_h2o, cau, Q_ref, t_ref, p_ref = "m³", "°C", "mm Hg", "mm H₂O", "dscm", "0.02124", "20", "760"
 
 with col_unidades:
     st.write("")
@@ -66,13 +71,14 @@ with col_teoria:
         teoria()
 
 # Condiciones iniciales
+st.write(f"Método 5 utilizando patrón húmedo con condiciones de referencia de caudal {Q_ref} {cau}, presión {p_ref} {u_pres} y temperatura {t_ref} {u_temp}.")
 col_subt, col_amb1, col_amb2, col_amb3, col_amb4 = st.columns([2, 1, 1, 1, 1])
 
 with col_subt:
     st.markdown("")
     st.markdown("### Condiciones iniciales y corridas")
 with col_amb1:
-    temp_amb = st.number_input(f"Temperatura ambiente [{u_temp}]", value=0.0, format="%.2f", step=0.1)
+    temp_amb = st.number_input(f"Temperatura ambiente [{u_temp}]", format="%.2f", step=0.1, key="temp_amb", on_change=marcar_dato_manual)
 with col_amb2:
     humedad = st.number_input("Humedad [%]", value=0.0, format="%.1f", step=1.0)
 with col_amb3:

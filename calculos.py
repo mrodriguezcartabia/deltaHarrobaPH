@@ -68,7 +68,7 @@ def cargar_datos_muestra(columnas):
 
     if st.session_state.unit_system == 'metrico':
         st.session_state.p_bar = 760.0
-        st.session_state.temp_amb = 19.0
+        st.session_state.temp_amb = 20.0
         datos_muestra = [
             [7.62, 0.137, 0.137, 21.0, 21.0, 22.0, 0.0, 15.0, 0.0, 0.0],
             [7.62, 0.137, 0.135, 21.0, 21.0, 22.0, 0.0, 15.0, 0.0, 0.0],
@@ -78,7 +78,7 @@ def cargar_datos_muestra(columnas):
         ]
     else:
         st.session_state.p_bar = 29.921259843
-        st.session_state.temp_amb = 66.2
+        st.session_state.temp_amb = 68
         datos_muestra = [
             [0.3000, 4.8381, 4.8381, 69.8, 69.8, 71.6, 0.0, 15.0, 0.0, 0.0],
             [0.3000, 4.8381, 4.7675, 69.8, 69.8, 71.6, 0.0, 15.0, 0.0, 0.0],

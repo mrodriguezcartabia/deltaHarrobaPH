@@ -8,10 +8,10 @@ def generar_pdf(df_corridas, p_bar, Y_factor, delta_h_arroba, unit_system, temp_
     # 1. Definir unidades según el sistema
     if unit_system == 'metrico':
         sistema_nombre = "sistema internacional"
-        u_vol, u_temp, u_pres, u_h2o = "m3", "C", "mm Hg", "mm H2O"
+        u_vol, u_temp, u_pres, u_h2o, cau, Q_ref, t_ref, p_ref = "m3", "°C", "mm Hg", "mm H2O", "dscm", "0.02124", "20", "760"
     else:
         sistema_nombre = "sistema imperial"
-        u_vol, u_temp, u_pres, u_h2o = "ft3", "F", "in. Hg", "in. H2O"
+        u_vol, u_temp, u_pres, u_h2o, cau, Q_ref, t_ref, p_ref = "ft3", "°F", "in. Hg", "in. H2O", "dcfm", "0.75", "68", "29.92"
 
     # 2. Inicializar PDF
     pdf = FPDF(orientation='P', unit='mm', format='A4')
@@ -31,10 +31,11 @@ def generar_pdf(df_corridas, p_bar, Y_factor, delta_h_arroba, unit_system, temp_
     
     pdf.set_font("Arial", size=10)
     pdf.ln(2)
-    pdf.cell(90, 6, txt=f"Sistema de unidades: {sistema_nombre}", ln=True)
-    pdf.cell(100, 6, txt=f"Presión barométrica (Pbar): {p_bar:.2f} {u_pres}")
+    pdf.cell(80, 6, txt=f"Sistema de unidades: {sistema_nombre}")
+    pdf.cell(100, 6, txt=f"Condiciones de referencia: {Q_ref} {cau}, {p_ref} {u_pres} y {t_ref} {u_temp}", ln=True)
+    pdf.cell(80, 6, txt=f"Presión barométrica (Pbar): {p_bar:.2f} {u_pres}")
     pdf.cell(100, 6, txt=f"Factor de calibración global (Y): {Y_factor:.4f}", ln=True)
-    pdf.cell(100, 6, txt=f"Temperatura ambiente: {temp_amb:.2f} {u_temp}")
+    pdf.cell(80, 6, txt=f"Temperatura ambiente: {temp_amb:.2f} {u_temp}")
     pdf.cell(100, 6, txt=f"Delta H@ promedio: {delta_h_arroba:.4f} {u_h2o}", ln=True)
     pdf.ln(5)
     

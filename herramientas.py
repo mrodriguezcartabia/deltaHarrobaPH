@@ -12,6 +12,7 @@ def toggle_units(columnas_base):
     
     # Si los datos actuales eran de muestra, los reseteamos a cero al cambiar unidad
     if st.session_state.is_sample_data:
+        st.session_state.temp_amb = 0.0
         st.session_state.p_bar = 0.0
         st.session_state.df_corridas = pd.DataFrame([[0.0]*len(columnas_base) for _ in range(st.session_state.num_corridas)], columns=columnas_base)
         st.session_state.is_sample_data = False # Apagamos la bandera tras borrar
